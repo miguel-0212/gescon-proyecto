@@ -1,0 +1,25 @@
+{
+  "name": "gescon",
+  "version": "1.0.0",
+  "description": "Sistema de Gestión de Concesionario — API REST (Node.js + Express + MySQL)",
+  "main": "mgb/index.js",
+  "scripts": {
+    "start": "node mgb/index.js",
+    "dev": "nodemon mgb/index.js",
+    "test": "jest --coverage --verbose"
+  },
+  "dependencies": {
+    "express": "^4.22.2",
+    "mysql2": "^3.22.5"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.14"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/tests/**/*.test.js"
+    ]
+  }
+}

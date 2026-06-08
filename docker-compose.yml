@@ -1,0 +1,45 @@
+services:
+
+  # ── Base de datos MySQL ────────────────────────────────────────────────────
+  db:
+    image: mysql:8.0
+    container_name: concesionario_mgb
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root}
+      MYSQL_DATABASE:      concesionario_mgb
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./sql/BD-concesionario.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_PASSWORD:-root}"]
+      interval: 10s
+      timeout:  5s
+      retries:  5
+      start_period: 30s
+
+  # ── API REST Node.js ───────────────────────────────────────────────────────
+  app:
+    build: .
+    image: gescon_mgb:latest
+    container_name: gescon_mgb
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      NODE_ENV:    production
+      PORT:        3000
+      DB_HOST:     db
+      DB_PORT:     3306
+      DB_USER:     root
+      DB_PASSWORD: ${DB_PASSWORD:-root}
+      DB_NAME:     concesionario_mgb
+    ports:
+      - "3000:3000"
+
+volumes:
+  mysql_data:
+    driver: local
