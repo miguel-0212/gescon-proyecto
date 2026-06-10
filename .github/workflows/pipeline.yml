@@ -113,9 +113,11 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd ~/gescon-proyecto
-            export DOCKER_IMAGE=${{ env.IMAGE_NAME }}:${{ github.sha }}
-            export DB_PASSWORD=${{ secrets.DB_PASSWORD }}
-            docker compose pull app
+            git pull origin main
+            docker compose down
+            docker rmi gescon_mgb:latest || true
+            docker pull miguel021201/gescon_mgb:latest
+            docker tag miguel021201/gescon_mgb:latest gescon_mgb:latest
             docker compose up -d --remove-orphans
             docker compose ps
-            echo "✅ Despliegue completado: $DOCKER_IMAGE"
+            echo " Desplegue completado"
