@@ -26,7 +26,7 @@ router.get('/coches', async (req, res) => {
 
   try {
     const coches = await cocheService.consultarCochesPorMarca(marca);
-    return res.status(200).json(coches);
+    return res.status(200).json({ version: "1.1", data: coches });
   } catch (err) {
     console.error('Error en GET /coches:', err.message);
     return res.status(500).json({ error: 'Internal Server Error', mensaje: err.message });

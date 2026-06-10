@@ -19,11 +19,10 @@ app.use((req, res) => {
 // Solo funciona si este archivo es el punto de entrada (no en tests)
 if (require.main === module) {
   app.listen(PORT, () => {
-    console.log(` Servidor gescon corriendo en http://localhost:${PORT}`);
-    console.log(`   Proyecto integrador — Miguel González Bobes`);
-    console.log(`   GET  /coches?marca=Seat`);
-
-    console.log(`   POST /coches`);
+      console.log(`   API gescon_mgb v1.1 corriendo en http://localhost:${PORT}`);
+      console.log(`   GET  /coches?marca=Seat`);
+      console.log(`   POST /coches`);
+      console.log(`   Proyecto integrador — Miguel González Bobes`);
   });
 }
 
