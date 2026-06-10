@@ -5,15 +5,8 @@ const { CocheService, ValidationError } = require('../service/CocheService');
 const router = express.Router();
 const cocheService = new CocheService();
 
-// ─── GET /coches?marca=Seat ────────────────────────────────────────────────
-/**
- * Consultar coches por marca.
- * Query param: marca (string, obligatorio)
- * Respuestas:
- *   200 OK        → lista de coches (puede ser vacía [])
- *   400 Bad Request → falta el parámetro marca
- *   404 Not Found → ruta no existe
- */
+//GET /coches?marca=Seat 
+
 router.get('/coches', async (req, res) => {
   const { marca } = req.query;
 
@@ -33,14 +26,8 @@ router.get('/coches', async (req, res) => {
   }
 });
 
-// ─── POST /coches ─────────────────────────────────────────────────────────
-/**
- * Registrar un nuevo coche.
- * Body JSON: { identificador, marca, modelo, cilindrada }
- * Respuestas:
- *   201 Created     → coche creado
- *   400 Bad Request → datos inválidos (cilindrada ≤ 0, campos vacíos…)
- */
+// POT /coches 
+
 router.post('/coches', async (req, res) => {
   const { identificador, marca, modelo, cilindrada } = req.body;
 
@@ -51,7 +38,7 @@ router.post('/coches', async (req, res) => {
     return res.status(201).json(creado);
   } catch (err) {
     if (err instanceof ValidationError) {
-      return res.status(400).json({ error: 'Bad Request', mensaje: err.message });
+      return res.status(400).json({ error: 'BadRequest', mensaje: err.message });
     }
     console.error('Error en POST /coches:', err.message);
     return res.status(500).json({ error: 'Internal Server Error', mensaje: err.message });
@@ -60,7 +47,7 @@ router.post('/coches', async (req, res) => {
 
 // ─── 404 catch-all ────────────────────────────────────────────────────────
 router.use((req, res) => {
-  res.status(404).json({ error: 'Not Found', mensaje: 'El recurso solicitado no existe.' });
+  res.status(404).json({ error: 'Not Found', mensaje: 'El recurso solictado no existe.' });
 });
 
 module.exports = router;
