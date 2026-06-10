@@ -16,7 +16,7 @@ app.use((req, res) => {
 });
 
 // ── Arranque ─────────────────────────────────────────────────────────────────
-// Solo funciona si este archivo es el punto de entrada (no  tests)
+// Solo funciona si este archivo es el punto de entrada (no en tests)
 if (require.main === module) {
   app.listen(PORT, () => {
       console.log(`   API gescon_mgb v1.1 corriendo en http://localhost:${PORT}`);
